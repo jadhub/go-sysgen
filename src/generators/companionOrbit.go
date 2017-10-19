@@ -1,7 +1,7 @@
 package generators
 
 import (
-	"go-system-gen/src/definitions"
+	"go-sysgen/src/definitions"
 )
 
 type (

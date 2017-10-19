@@ -1,9 +1,9 @@
 package main
 
 import (
-	"go-system-gen/src/definitions"
+	"go-sysgen/src/definitions"
 
-	"go-system-gen/src/generators"
+	"go-sysgen/src/generators"
 
 	"fmt"
 
