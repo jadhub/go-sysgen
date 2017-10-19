@@ -29,5 +29,5 @@ func main() {
 	}
 
 	fmt.Printf("%+v\n", generatorChain.System)
-	fmt.Print(generatorChain.System.SystemType)
+	fmt.Printf("%s", generatorChain.System.SystemType)
 }
