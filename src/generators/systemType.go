@@ -16,43 +16,53 @@ func (Generator SystemTypeGenerator) GetName() string {
 
 // Run runs the Generator
 func (Generator SystemTypeGenerator) Run(system *definitions.System) {
-	currentProb := Generator.GetProbability()
+	currentProb := Generator.getSystemProbability()
 
-	result := Generator.GetResult(
-		currentProb.Dice.Roll(),
+	result := definitions.GetProbabilityResult(
+		currentProb.RollAll(),
 		currentProb.Lookup,
 	)
 
 	system.SystemType = result.(string)
+
+	if system.SystemType == "multiple" {
+		currentProb := Generator.getStarNumberProbability()
+		result := definitions.GetProbabilityResult(
+			currentProb.RollAll(),
+			currentProb.Lookup,
+		)
+		system.NumberOfStars = result.(int)
+	} else {
+		system.NumberOfStars = 1
+	}
 }
 
-// GetResult fetches the result
-func (Generator SystemTypeGenerator) GetResult(roll int, lookup map[int]interface{}) interface{} {
-	var result interface{}
-	lastIndex := 0
+func (Generator SystemTypeGenerator) getSystemProbability() definitions.Probability {
+	var result definitions.Probability
 
-	for index, value := range lookup {
+	result.Dice = append(result.Dice, definitions.Dice{
+		Sides: 10,
+	})
 
-		if roll <= index && roll >= lastIndex {
-			result = value
-		}
-		lastIndex = index + 1
+	result.Lookup = map[int]interface{}{
+		5:  "solitary",
+		10: "multiple",
 	}
 
 	return result
 }
 
-// GetProbability returns Probability Data
-func (Generator SystemTypeGenerator) GetProbability() definitions.Probability {
+func (Generator SystemTypeGenerator) getStarNumberProbability() definitions.Probability {
 	var result definitions.Probability
 
-	result.Dice = definitions.Dice{
-		Sides: 10,
-	}
+	result.Dice = append(result.Dice, definitions.Dice{
+		Sides: 20,
+	})
 
 	result.Lookup = map[int]interface{}{
-		5:  "solitary",
-		10: "multiple",
+		10: 1,
+		16: 2,
+		20: 3,
 	}
 
 	return result

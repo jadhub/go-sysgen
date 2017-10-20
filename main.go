@@ -21,6 +21,7 @@ func main() {
 
 	generatorChain.Generators = append(generatorChain.Generators,
 		generators.SystemTypeGenerator{},
+		generators.PrimaryStarGenerator{},
 		generators.CompanionOrbitGenerator{},
 	)
 
@@ -29,5 +30,4 @@ func main() {
 	}
 
 	fmt.Printf("%+v\n", generatorChain.System)
-	fmt.Printf("%s", generatorChain.System.SystemType)
 }
